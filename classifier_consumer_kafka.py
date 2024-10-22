@@ -21,7 +21,7 @@ class CustomerDatabase:
             issue_type = email_data.get('forward', 'other')
             email_content = email_data.get('content', '')
 
-            # Check if customer exists
+            # Check if customer exists now
             cursor.execute('SELECT customer_id FROM customers WHERE LOWER(email) = ?', (email,))
             result = cursor.fetchone()
 
