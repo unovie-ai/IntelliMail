@@ -1,0 +1,45 @@
+input:
+  label: ""
+  kafka:
+    addresses: 
+      - localhost:19092
+    topics: 
+      - support_topic
+    target_version: 2.1.0
+    checkpoint_limit: 1024
+    auto_replay_nacks: true
+    consumer_group: test_group  # Add your consumer group here
+
+pipeline:
+  processors:
+    - label: ""
+      ollama_chat:
+        model: llama3.2:latest  # Updated model version
+        prompt: "Extract the following details from the email: 1. To Email, 2. From Email, 3. Content, 4. Type of Message, 5. Summary, 6. Forward (strictly either 'shipping','billing' or 'unknown'  based on the content of the email). Output a JSON file with the following fields: { 'to': '', 'from': '', 'content': '', 'type': '', 'summary': '', 'forward': '' }  Email: '${! content() }'"
+        response_format: json
+        max_tokens: 0
+        temperature: 0
+        runner:
+          context_size: 0
+          batch_size: 0
+        server_address: http://localhost:11434
+
+output:
+  label: ""
+  kafka:
+    addresses: 
+      - localhost:19092
+    topic: output_support_topic
+    target_version: 2.1.0
+    key: ""
+    partitioner: fnv1a_hash
+    compression: none
+    static_headers: {}
+    metadata:
+      exclude_prefixes: []
+    max_in_flight: 64
+    batching:
+      count: 0
+      byte_size: 0
+      period: ""
+      check: ""
