@@ -11,6 +11,18 @@ import re
 
 app = Flask(__name__)
 fake = Faker()
+from dotenv import load_dotenv
+import os
+
+# Load the environment variables from .env file
+load_dotenv()
+
+# Extract SMTP server and port
+smtp_server = os.getenv("SMTP_SERVER")
+smtp_port = int(os.getenv("SMTP_PORT"))
+
+# Extract Redpanda broker port
+redpanda_broker_port = os.getenv("REDPANDA_BROKER_PORT")
 
 topics_list = [
     "Customer Billing Issue",
@@ -77,8 +89,9 @@ def generate_email_content(topic):
         return f"Error generating email: {str(e)}"
 
 def background_email_task():
-    smtp_server = "localhost"
-    smtp_port = 25
+    # Extract SMTP server and port
+    smtp_server = os.getenv("SMTP_SERVER")
+    smtp_port = int(os.getenv("SMTP_PORT"))
 
     while True:
         selected_topic = random.choice(topics_list)
