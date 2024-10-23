@@ -8,12 +8,12 @@ from confluent_kafka import Consumer, KafkaError
 import sqlite3
 import os
 from dotenv import load_dotenv
-
+from billing_db import initialize_database  
 load_dotenv()
 customer_service_prompt = os.getenv('customer_service_prompt')
 
 # Kafka configuration
-KAFKA_BOOTSTRAP_SERVERS = 'localhost:19092'
+KAFKA_BOOTSTRAP_SERVERS = 'redpanda:9092'
 BILLING_TOPIC = 'billing_topic'
 
 # Configure the consumer
@@ -30,12 +30,13 @@ consumer = Consumer(conf)
 consumer.subscribe([BILLING_TOPIC])
 
 # Email configuration
-smtp_server = "localhost"
+smtp_server = "192.168.0.185"
 smtp_port = 25  # Updated to 25
 billing_email = "billaccount1@company.com"
 
 # Function to get customer details from the database
 def get_customer_details(email):
+    initialize_database()
     conn = sqlite3.connect('billing_db.db')
     cursor = conn.cursor()
     cursor.execute("SELECT name, billing_statement FROM billing_customers WHERE email=?", (email,))
@@ -75,7 +76,7 @@ try:
         # Call the Ollama LLM API for generating the reply
         prompt = f"{customer_service_prompt}. For the following message:\n{message_value}\nOriginal billing statement: {billing_statement}\nCustomer name: {customer_name}. Return the corrected Bill if applicable. [DO NOT USE PLACEHOLDERS]"
         response = requests.post(
-            "http://localhost:11434/api/generate",
+            "http://192.168.0.185:11434/api/generate",
             json={"model": "gemma:2b", "prompt": prompt, "stream": False}
         )
 

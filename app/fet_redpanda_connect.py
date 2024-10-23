@@ -6,10 +6,10 @@ from confluent_kafka import Producer
 import socket
 
 # Base API URL for Mail4Dev
-BASE_URL = 'http://localhost:5000/api'
+BASE_URL = 'http://192.168.0.185:5000/api'
 
 # Kafka configuration
-KAFKA_BOOTSTRAP_SERVERS = 'localhost:19092'  # IP address of the system running Redpanda
+KAFKA_BOOTSTRAP_SERVERS = 'redpanda:9092'  # IP address of the system running Redpanda
 
 # Function to get new messages from the 'support' mailbox
 def get_messages(mailbox_name='support', page_size=50):

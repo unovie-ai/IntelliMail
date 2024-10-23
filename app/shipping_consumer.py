@@ -9,12 +9,12 @@ from confluent_kafka import Consumer, KafkaError
 import sqlite3
 import os
 from dotenv import load_dotenv
-
+from shipping_db import initialize_database
 load_dotenv()
 customer_service_prompt = os.getenv('customer_service_prompt')
 
 # Kafka configuration
-KAFKA_BOOTSTRAP_SERVERS = 'localhost:19092'
+KAFKA_BOOTSTRAP_SERVERS = 'redpanda:9092'
 SHIPPING_TOPIC = 'shipping_topic'
 
 # Configure the consumer
@@ -31,11 +31,12 @@ consumer = Consumer(conf)
 consumer.subscribe([SHIPPING_TOPIC])
 
 # Email configuration
-smtp_server = "localhost"
+smtp_server = "192.168.0.185"
 smtp_port = 25  # Updated to 25
 shipping_email = "shipaccount1@company.com"
 
 def get_customer_details(email):
+    initialize_database()
     conn = sqlite3.connect('shipping_db.db')
     cursor = conn.cursor()
     cursor.execute("SELECT name, shipping_statement FROM customers WHERE email=?", (email,))
@@ -75,7 +76,7 @@ try:
         # Call the Ollama LLM API for generating the reply
         prompt = f"{customer_service_prompt}. For the following message:\n{message_value}\nOriginal shipment statement: {shipping_statement}\nCustomer name: {customer_name}. Return any corrections if any.[DO NOT USE PLACEHOLDERS]"
         response = requests.post(
-            "http://localhost:11434/api/generate",
+            "http://192.168.0.185:11434/api/generate",
             json={"model": "gemma:2b", "prompt": prompt, "stream": False}
         )
 

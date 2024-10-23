@@ -6,13 +6,13 @@ from email.mime.text import MIMEText
 import time
 
 # SMTP4Dev server settings
-SMTP_SERVER = "localhost"
+SMTP_SERVER = "192.168.0.185"
 SMTP_PORT = 25
 BILLING_EMAIL = "billaccount1@company.com"
 SHIPPING_EMAIL = "shipaccount1@company.com"
 
 # API endpoint settings
-SMTP4DEV_API_URL = "http://localhost:5000/api"
+SMTP4DEV_API_URL = "http://192.168.0.185:5000/api"
 
 def get_unread_messages(mailbox_name):
     """Fetch unread messages from the specified mailbox."""

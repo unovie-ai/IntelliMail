@@ -6,12 +6,13 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
-
+from db_for_classifier import initialize_database
 class CustomerDatabase:
     def __init__(self, db_path='db_for_classification.sqlite'):
         self.db_path = db_path
 
     def update_customer_from_email(self, email_data):
+        initialize_database()
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         
@@ -66,7 +67,7 @@ class CustomerDatabase:
 
 def main():
     # Kafka configuration
-    KAFKA_BOOTSTRAP_SERVERS = 'localhost:19092'
+    KAFKA_BOOTSTRAP_SERVERS = 'redpanda:9092'
     OUTPUT_TOPIC = 'output_support_topic'
 
     # Initialize database handler
@@ -125,7 +126,7 @@ def main():
                     formatted_message = f"{json_data.get('content', '')}" # Pretty print the JSON
                     email_msg.attach(MIMEText(formatted_message, 'plain'))
 
-                    with smtplib.SMTP('localhost', 25) as server:
+                    with smtplib.SMTP('192.168.0.185', 25) as server:
                         server.send_message(email_msg)
                         print("Email forwarded to hpdesk1@company.com")
                         print(f"Email: {message_value}")

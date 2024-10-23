@@ -18,8 +18,8 @@ import os
 load_dotenv()
 
 # Extract SMTP server and port
-smtp_server = os.getenv("SMTP_SERVER")
-smtp_port = int(os.getenv("SMTP_PORT"))
+smtp_server = "host.docker.internal"
+smtp_port = 25
 
 # Extract Redpanda broker port
 redpanda_broker_port = os.getenv("REDPANDA_BROKER_PORT")
@@ -51,7 +51,7 @@ def get_email_template(topic):
     """
     
     response = requests.post(
-        "http://localhost:11434/api/generate",
+        "http://192.168.0.185:11434/api/generate",
         json={"model": "llama3.2:latest", "prompt": template_prompt, "stream": False}
     )
     
@@ -90,8 +90,8 @@ def generate_email_content(topic):
 
 def background_email_task():
     # Extract SMTP server and port
-    smtp_server = os.getenv("SMTP_SERVER")
-    smtp_port = int(os.getenv("SMTP_PORT"))
+    smtp_server = "192.168.0.185"
+    smtp_port = 25
 
     while True:
         selected_topic = random.choice(topics_list)
