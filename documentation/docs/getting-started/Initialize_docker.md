@@ -36,6 +36,3 @@ Redpanda
   username: "john"
   password: "some-secret-password"
 
-Documentation :
-  Web Interface : http://localhost:8000/unovie-ai/IntelliMail/getting-started/Run_docker/
-  

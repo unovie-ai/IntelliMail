@@ -1,5 +1,6 @@
 site_name: RedPanda Hackathon
 site_url: https://github.com/unovie-ai/IntelliMail
+dev_addr: '127.0.0.1:7001'
 theme:
   name: material
   custom_dir: docs/.overrides
@@ -68,3 +69,7 @@ plugins:
 
 nav:
   - welcome : /docs/
+  - getting-started : 
+    - getting-started/Initialize_docker.md
+    - getting-started/Run_docker.md
+    - getting-started/License.md

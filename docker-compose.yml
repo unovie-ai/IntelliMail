@@ -113,12 +113,19 @@ services:
       - redpanda_network
     environment:
       - PATH=/root/.local/bin:$PATH
+    volumes:
+      - ./documentation:/documentation  # Mount the documentation directory outside /app
+    ports:
+      - "8000:8000"  # Map port 8000 from container to host
     command: >
       bash -c "
       echo 'Installing Python dependencies...' &&
       pip install -r /app/requirements.txt &&
       echo 'Environment is ready!' &&
-      tail -f /dev/null"
+      cd /documentation && 
+      mkdocs serve --dev-addr=0.0.0.0:8000 || 
+      python -m http.server 8000 
+      "
 
   smtp4dev:
     container_name: smtp4dev
