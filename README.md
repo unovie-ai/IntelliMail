@@ -16,7 +16,8 @@ docker-compose up --build -d
 Run the following commands to ensure llama3.2 is SLM model 
 
 ```
-docker exec -it ollama ollama pull llama3.2
+docker exec -it ollama ollama pull llama3.2;
+docker exec -it ollama ollama pull gemma:2b
 
 ```
 
