@@ -29,9 +29,3 @@ Redpanda
   username: "john"
   password: "some-secret-password"
 
-
-
-### If you ssh into this Sandbox
-
-ssh -L5000:127.0.0.1:5000 -L8080:127.0.0.1:8080 unovie@<<ip_address>>
-password : unovie2024 
