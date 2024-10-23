@@ -32,7 +32,6 @@ services:
       - redpanda:/var/lib/redpanda/data
     networks:
       - redpanda_network
-
   redpandarpk:
     image: docker.redpanda.com/redpandadata/redpanda:v23.2.21
     command:

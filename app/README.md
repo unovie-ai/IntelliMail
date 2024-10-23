@@ -3,7 +3,12 @@
 This project involves running seven different scripts, each contributing to the overall flow of customer complaint handling, classification, and resolution using Redpanda as a message broker and Ollama for generating responses. Below is an expanded and detailed guide on what each script does and how to run them in separate terminal windows or tabs. The services should be executed in the order presented.
 
 ---
-
+First lets add the topics involved to redpanda broker.
+**Command**: 
+```bash
+docker exec -it redpanda-enterprise-redpanda-1 bash -c 'rpk topic create billing_topic && rpk topic create output_support_topic && rpk topic create shipping_topic && rpk topic create support_topic'
+```
+---
 #### **Terminal 1 - Flask Application (Initial Data Generation)**
 The following scripts can be run inside the container directly or run independently if you have the dependencies installed locally.
 **Purpose**: The `flask_app.py` script initializes and generates synthetic customer complaints, simulating email messages sent to `support@company.com`. These complaints will later be picked up by other components for processing.
