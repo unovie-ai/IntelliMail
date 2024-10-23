@@ -1,0 +1,70 @@
+site_name: RedPanda Hackathon
+site_url: https://github.com/unovie-ai/IntelliMail
+theme:
+  name: material
+  custom_dir: docs/.overrides
+  logo: assets/logo.png
+  palette:
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  font:
+    text: Inter
+    monospace: Fira Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - content.code.annotate
+    - content.code.copy
+    - content.tabs.link
+    - content.action.edit
+    - toc.follow
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+
+
+  extra:
+    homepage: https://unovie.ai
+    social:
+      - icon: fontawesome/brands/x-twitter
+        link: https://twitter.com/unovie
+      - icon: fontawesome/brands/linkedin
+        link: https://linkedin.com/company/unovie
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - def_list
+  - pymdownx.details
+  - pymdownx.keys
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - mdx_gh_links:
+      user: astral-sh
+      repo: rye
+
+
+plugins:
+  - search
+  - glightbox
+  - mkdocs-pdf
+
+
+nav:
+  - welcome : /docs/
