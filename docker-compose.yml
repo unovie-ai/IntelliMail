@@ -119,6 +119,21 @@ services:
     depends_on:
       - redpanda
 
+  python-app:
+    container_name: python-app
+    build: ./app/
+    network_mode: "host"
+    environment:
+      - PATH=/root/.local/bin:$PATH
+    command: >
+      bash -c "
+      echo 'Installing Python dependencies...' &&
+      pip install -r /app/requirements.txt &&
+      echo 'Environment is ready!' &&
+      tail -f /dev/null"
+    networks:
+      - redpanda_network
+
 
   smtp4dev:
     container_name: smtp4dev
@@ -132,6 +147,8 @@ services:
         - ./smtp4dev:/smtp4dev
     networks:
       - redpanda_network
+
+  
 
   wg-easy:
     environment:

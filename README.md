@@ -7,7 +7,13 @@ Capacity Requirements :
   - 12 GB of RAM
   - 100 GB of SSD Disk Space.
 
-Run the following commands to ensure the proper environment is set
+To Build and start the containers 
+
+```
+docker-compose up --build -d
+```
+
+Run the following commands to ensure llama3.2 is SLM model 
 
 ```
 docker exec -it ollama ollama pull llama3.2
