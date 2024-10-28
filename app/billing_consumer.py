@@ -10,7 +10,7 @@ import os
 from dotenv import load_dotenv
 from billing_db import initialize_database  
 load_dotenv()
-customer_service_prompt = os.getenv('customer_service_prompt')
+customer_service_prompt="You are a Customer service agent. Generate a friendly and professional email response to a the email content, ensuring to address their message details. Include relevant information, the content of the message. Keep it simple and respond to the email"
 
 # Kafka configuration
 KAFKA_BOOTSTRAP_SERVERS = 'redpanda:9092'
